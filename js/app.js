@@ -10,9 +10,9 @@ var itemIndex3 = 2;
 var rounds = 25;
 var allItems = [];
 
-function Items(name, imagePath){
+function Items(name, imageUrl){
   this.name = name;
-  this.imagePath = imagePath;
+  this.imageUrl = imageUrl;
   this.timesClicked = 0;
   allItems.push(this);
 }
@@ -42,13 +42,14 @@ var totalClicks = 0;
 function itemClicked(event){
   totalClicks++;
   if(event.srcElement.id === '1'){
-    allItems[itemIndex1].timesClicked++
+    allItems[itemIndex1].timesClicked++;
   } else if(event.srcElement.id ==='2'){
-    allItems[itemIndex2].timesClicked++
-  } else(event.srcElement.id ==='3'){
-    allItems[itemIndex3].timesClicked++
-  }
-}
+    allItems[itemIndex2].timesClicked++;
+  } else(event.srcElement.id ==='3')
+    allItems[itemIndex3].timesClicked++;
+    }
+  
+
 
 var nextItemIndex1 = Math.floor(Math.random() * allItems.length);
 while ((nextItemIndex1 === itemIndex1) || (nextItemIndex2 === nextItemIndex1)){
@@ -66,3 +67,25 @@ var nextItemIndex3 = Math.floor(Math.random() * allItems.length);
 while ((nextItemIndex3 === itemIndex3) || (nextItemIndex3 === nextItemIndex1)){
   nextItemIndex3 = Math.floor(Math.random() * allItems.length);
 }
+
+itemIndex1 = nextItemIndex1;
+itemIndex2 = nextItemIndex2;
+itemIndex3 = nextItemIndex3;
+
+imageElements[0].src = allItems[itemIndex1].imageUrl;
+imageElements[1].src = allItems[itemIndex2].imageUrl;
+imageElements[2].src = allItems[itemIndex3].imageUrl;
+
+if(totalClicks >=rounds){
+  var footerElement = document.getElementsByTagName('footer')[0];
+  if(footerElement.firstElementChild){
+    footerElement.firstElementChild.remove();
+  }
+  footerElement.textContent = 'Wow You Picked a bunch of items!'
+  }
+}
+
+for(var i = 0; i < imageElements.length; i++){
+  imageElements[i].addEventListener('click', imageWasClicked);
+}
+
