@@ -15,6 +15,7 @@ function Item(name, imageUrl){
   this.name = name;
   this.imageUrl = imageUrl;
   this.timesClicked = 0;
+  this.timesShown =0;
   allItems.push(this);
 }
 
@@ -90,24 +91,79 @@ if(totalClicks >=rounds){
   if(footerElement.firstElementChild){
     footerElement.firstElementChild.remove();
   }
-  footerElement.textContent = 'Wow You Picked a bunch of items!';
+  // footerElement.textContent = 'Wow You Picked a bunch of items!';
+ 
   var asideUl = document.getElementById('Results')
   console.log('calling aside in html')
   for(var x = 0; x < allItems.length; x++){
     var resultsListItem = document.createElement('li');
-    resultsListItem.textContent = `{allItems[x].name}`
+    resultsListItem.textContent = `${allItems[x].name} was clicked on ${allItems[x].timesClicked} times shown ${allItems[x].timesShown} times.`;
+    asideUl.appendChild(resultsListItem);
+    var percentageListItem = document.createElement('li');
+    if(allItems[x].timesClicked ===0){
+      var math = `ZERO clicks and shown ${allItems[x.timesShown]} time.`;
+    } else {
+      math = Math.round(((allItems[x]['timesClicked'] / allItems[x]['timesShown']).toFixed(2) * 100)) + '%';
+    }
+    percentageListItem.textContent = `${allItems[x].name} percentage of clicked on Items times shown is` + math;
+    asideUl.appendChild(percentageListItem)
   }
-  }
-
-
+  
 for(var i = 0; i < imageElements.length; i++){
-  imageElements[i].addEventListener('click', imageWasClicked);
-} else {
-  imageElements[i].removeEventListener('click', function(){
-    rounds;
-  });
+  imageElements[i].removeEventListener('click', imageWasClicked);
 }
- 
+
+  }
+  runMyChartNow();
 
 
+
+function runMyChartNow() {
+
+  var ctx = document.getElementById('itemResults').getContext('2d');
+
+
+var itemChart = new itemChart(ctx, {
+    type: 'bar',
+    data: {
+        // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: getItemArray('name'),
+        datasets: [{
+            label: '# of Votes',
+            // data: [12, 19, 3, 5, 2, 3],
+            data: getItemArray('timesClicked'),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+}
+for(var i = 0; i < imageElements.length; i++) {
+  imageElements[i].addEventListener('click', imageWasClicked);
+}
 

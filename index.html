@@ -17,15 +17,18 @@
 
       <aside>
         <h2>Results</h2>
-        <ul id="Results"></ul>
+        <ul id="itemResults"></ul>
       </aside>
 
     <img id="1" src="images/bag.jpg" alt="bag" height="150" width="150"/>
     <img id="2" src="images/banana.jpg" alt="banana" height="150" width="150"/>
     <img id="3" src="images/bathroom.jpg" alt="bathroom" height="150" width="150"/>
     </main>
-    <footer><p>Please vote for items!</p></footer>
-    
+    <footer>
+      <p>Please vote for items!</p>
+      <canvas id="itemResults" width="400" height="400"></canvas>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="js/app.js" ></script>
   </body>
 </html>
