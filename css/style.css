@@ -1,0 +1,18 @@
+body{
+  object-position: center;
+  border-style: double;
+  border-width: 20px;
+  background-color: orangered;
+}
+footer{
+  background-color: darkgoldenrod;
+  color: darkblue;
+  font-family: fantasy;
+  font-size: 40px;
+}
+marquee{
+  background-color: red;
+  color: black;
+  font-size: 30px;
+  
+}
