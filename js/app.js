@@ -91,6 +91,12 @@ if(totalClicks >=rounds){
     footerElement.firstElementChild.remove();
   }
   footerElement.textContent = 'Wow You Picked a bunch of items!';
+  var asideUl = document.getElementById('Results')
+  console.log('calling aside in html')
+  for(var x = 0; x < allItems.length; x++){
+    var resultsListItem = document.createElement('li');
+    resultsListItem.textContent = `{allItems[x].name}`
+  }
   }
 
 
