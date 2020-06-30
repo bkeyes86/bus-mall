@@ -3,6 +3,7 @@ console.log('app.js is connected.');
 
 
 var imageElements = document.getElementsByTagName('img');
+var footerElement
 
 var itemIndex1  = 0;
 var itemIndex2  = 1;
@@ -85,7 +86,7 @@ imageElements[2].src = allItems[itemIndex3].imageUrl;
 
 if(totalClicks >=rounds){
   console.log('done')
-  var footerElement = document.getElementsByTagName('footer')[0];
+  var footerElement = document.getElementsByTagName('footer');
   if(footerElement.firstElementChild){
     footerElement.firstElementChild.remove();
   }
@@ -94,7 +95,13 @@ if(totalClicks >=rounds){
 
 
 for(var i = 0; i < imageElements.length; i++){
-  console.log('okkkkk')
-  imageElements[i].addEventListener('click', imageWasClicked, true);
+  imageElements[i].addEventListener('click', imageWasClicked);
+} else {
+  imageElements[i].removeEventListener('click', function(){
+    rounds;
+  });
 }
+ 
+
+
 
