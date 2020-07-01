@@ -18,6 +18,18 @@ function Item(name, imageUrl) {
   this.timesShown = 0;
   allItems.push(this);
 }
+//Create function for the chart render so that we can access the object properties.
+function getChartArray(nameOfThePropertyIWant){
+  var answer = [];
+  for(var j = 0; j < allItems.length; j++){
+    answer[j] = allItems[j][nameOfThePropertyIWant];
+  }
+  console.log(answer);
+  return answer;
+}
+
+
+
 
 
 var bag = new Item('bag', 'images/bag.jpg');
@@ -79,11 +91,15 @@ function imageWasClicked(event) {
   itemIndex2 = nextItemIndex2;
   itemIndex3 = nextItemIndex3;
 
-  imageElements[0].src = allItems[itemIndex1].imageUrl;
-  imageElements[1].src = allItems[itemIndex2].imageUrl;
-  imageElements[2].src = allItems[itemIndex3].imageUrl;
 
-}
+  imageElements[0].src = allItems[itemIndex1].imageUrl;
+  allItems[itemIndex1].timesShown++;
+  imageElements[1].src = allItems[itemIndex2].imageUrl;
+  allItems[itemIndex2].timesShown++;
+  imageElements[2].src = allItems[itemIndex3].imageUrl;
+  allItems[itemIndex3].timesShown++;
+
+
 
 if (totalClicks >= rounds) {
   console.log('done')
@@ -102,7 +118,7 @@ if (totalClicks >= rounds) {
 
     var percentageListItem = document.createElement('li');
     if (allItems[x].timesClicked === 0) {
-      var math = `ZERO clicks and shown ${allItems[x.timesShown]} time.`;
+      var math = `ZERO clicks and shown ${allItems[x].timesShown} time.`;
     } else {
       math = Math.round(((allItems[x]['timesClicked'] / allItems[x]['timesShown']).toFixed(2) * 100)) + '%';
     }
@@ -112,23 +128,25 @@ if (totalClicks >= rounds) {
 
   for (var i = 0; i < imageElements.length; i++) {
     imageElements[i].removeEventListener('click', imageWasClicked);
-  }
-}
-runMyChartNow();
-var arrayLabels = [];
-var arrayData = [];
+  }//that closes for loop
+  runMyChartNow();
+}// closes your if conditional for 25 clicks
+}//closes the function
+
+// var arrayLabels = [];
+// var arrayData = [];
 
 
-function createLabels(){
-  for(var i = 0; i < allItems.length; i++){
-    arrayLabels.push(allItems[i].name)
-  }
-}
-function createData(){
-  for(var i = 0; i < allItems.length; i++){
-    arrayData.push(allItems[i].timesClicked)
-  }
-}
+// function createLabels(){
+//   for(var i = 0; i < allItems.length; i++){
+//     arrayLabels.push(allItems[i].name)
+//   }
+// }
+// function createData(){
+//   for(var i = 0; i < allItems.length; i++){
+//     arrayData.push(allItems[i].timesClicked)
+//   }
+// }
 
 function runMyChartNow() {
 
@@ -138,12 +156,12 @@ function runMyChartNow() {
   var itemChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      labels: arrayLabels,
+      
+      labels: getChartArray('name'),
       datasets: [{
         label: '# of Clicks',
-        // data: [12, 19, 3, 5, 2, 3],
-        data: arrayData,
+      
+        data: getChartArray('timesClicked'),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
