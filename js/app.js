@@ -11,10 +11,14 @@ var itemIndex3 = 2;
 var rounds = 25;
 var allItems = [];
 
-function Item(name, imageUrl) {
+function Item(name, imageUrl, timesClicked) {
   this.name = name;
   this.imageUrl = imageUrl;
-  this.timesClicked = 0;
+  if(timesClicked){
+    this.timesClicked = timesClicked;
+  } else {
+    this.timesClicked = 0;
+  }
   this.timesShown = 0;
   allItems.push(this);
 }
@@ -27,11 +31,25 @@ function getChartArray(nameOfThePropertyIWant){
   console.log(answer);
   return answer;
 }
+Item.prototype.toString = function() {
+  return `${this.name} item is from our this.name for the specified arrayIndex, clicked ${this.timesClicked} times`
+};
+
+var savedItemString = localStorage.getItem('savedItem');
+
+if(savedItemString){
+
+  var arrayOfNotItemObject = JSON.parse(savedItemString);
+
+  for(var k = 0; k < arrayOfNotItemObject.length; k++){
+
+    new Item(arrayOfNotItemObject[k].name,
+      arrayOfNotItemObject[k].imageUrl,
+      arrayOfNotItemObject[k].timesClicked);
+  }
 
 
-
-
-
+} else {
 var bag = new Item('bag', 'images/bag.jpg');
 var banana = new Item('banana', 'images/banana.jpg');
 var bathroom = new Item('bathroom', 'images/bathroom.jpg');
@@ -52,6 +70,11 @@ var unicorn = new Item('unicorn', 'images/unicorn.jpg');
 var usb = new Item('usb', 'images/usb.gif');
 var waterCan = new Item('water-can', 'images/water-can.jpg');
 var wineGlass = new Item('wine-glass', 'images/wine-glass.jpg');
+}
+
+allItems[0].timesShown = 1;
+allItems[1].timesShown = 1;
+allItems[2].timesShown = 1;
 
 var totalClicks = 0;
 function imageWasClicked(event) {
@@ -103,6 +126,8 @@ function imageWasClicked(event) {
 
 if (totalClicks >= rounds) {
   console.log('done')
+  localStorage.setItem('savedItem', JSON.stringify(allItems));
+
   var footerElement = document.getElementsByTagName('footer');
   if (footerElement.firstElementChild) {
     footerElement.firstElementChild.remove();
